@@ -1,0 +1,22 @@
+# Configuration file for MAGELLAN2_LDSS3_VPHALL (Fast readout)
+# ------------------------------------------
+# ATEL: Telescope Collecting Area [cm2]
+# LMIN: Minimum Wavelength [A]
+# LMAX: Maximum Wavelength [A]
+# DPIX: Pixel Scale [arcsec/pixel]
+# DDISP: Dispersion [A/pixel]
+# DLSF: Optics Line Spread Function FWHM [A] (i.e. for an infinitely narrow slit)
+# GAIN: Gain [e/ADU]
+# RDN: Read Noise [e]
+# DARK: Dark Current [e/s]
+# ------------------------------------------
+ATEL  306383.8	      
+LMIN  3650
+LMAX  10100
+DPIX  0.189
+DDISP 1.89
+DLSF  0.10
+GAIN  1.50
+RDN   8.5
+DARK  0.001
+# NOTES: gain is average for both amplifiers

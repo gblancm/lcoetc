@@ -1,0 +1,21 @@
+# Configuration file for MAGELLAN2_MIKE_BLUE (Slow readout)
+# ------------------------------------------
+# ATEL: Telescope Collecting Area [cm2]
+# LMIN: Minimum Wavelength [A]
+# LMAX: Maximum Wavelength [A]
+# DPIX: Pixel Scale [arcsec/pixel]
+# DDISP: Dispersion [A/pixel]
+# DLSF: Optics Line Spread Function FWHM [A] (i.e. for an infinitely narrow slit)
+# GAIN: Gain [e/ADU]
+# RDN: Read Noise [e]
+# DARK: Dark Current [e/s]
+# ------------------------------------------
+ATEL  306383.8	      
+LMIN  3350
+LMAX  5000
+DPIX  0.12
+DDISP 0.02
+DLSF  0.06
+GAIN  0.477
+RDN   2.36
+DARK  0.000625

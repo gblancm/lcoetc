@@ -1,0 +1,24 @@
+# Configuration file for MAGELLAN1_MAGE_ECHELLETTE
+# ------------------------------------------
+# ATEL: Telescope Collecting Area [cm2]
+# LMIN: Minimum Wavelength [A]
+# LMAX: Maximum Wavelength [A]
+# DPIX: Pixel Scale [arcsec/pixel]
+# DDISP: Dispersion [A/pixel]
+# DLSF: Optics Line Spread Function FWHM [A] (i.e. for an infinitely narrow slit)
+# GAIN: Gain [e/ADU]
+# RDN: Read Noise [e]
+# DARK: Dark Current [e/s]
+# ------------------------------------------
+ATEL  306383.8	      
+LMIN  3300
+LMAX  10100
+DPIX  0.30
+DDISP 0.35
+DLSF  0.63
+GAIN  0.82
+RDN   3.1
+DARK  0.00028
+# NOTES: gain and rdn for Fast readout
+#        dispersion is rough estimate for central orders
+#        true dispersion goes from 0.23 to 0.79 depending on order

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: verdana;
+    font-size: 80%;
+}
+</style>
+
+
+<title>LCO ETC</title>
+
+<script>
+function comboInstrument(form) {
+
+    var selec = form.telescope.options;
+    var combo = form.instrument.options;
+    combo.length = null;
+
+    //Instrumentos Baade
+    if (selec[0].selected == true)
+    {
+    var seleccionar = new Option("Select","");
+    combo[0] = seleccionar;
+    }
+
+    if (selec[1].selected == true)
+    {
+    var ins_baade1 = new Option("Select", "");
+    var ins_baade2 = new Option("LLAMAS", "LLAMAS");
+   
+
+    combo[0] = ins_baade1;
+    combo[1] = ins_baade2;
+	
+    }
+
+    //Instrumentos Clay
+
+    if (selec[2].selected == true)
+    {
+    var ins_clay1 = new Option("Select", "");
+    var ins_clay2 = new Option("PFS", "PFS");
+	
+    combo[0] = ins_clay1;
+    combo[1] = ins_clay2;
+	}
+	
+    //Instrumentos du Pont
+	
+    if (selec[3].selected == true)
+    {
+    var ins_dupont1 = new Option("Select", "");
+<!--    var ins_dupont2 = new Option("Echelle", "ECHELLE"); -->
+<!--    var ins_dupont3 = new Option("Boller & Chivens", "B&C"); -->
+<!--    var ins_dupont4 = new Option("WFCCD", "WFCCD"); -->
+	
+    combo[0] = ins_dupont1;
+    combo[1] = ins_dupont2;
+    combo[2] = ins_dupont3;
+    combo[3] = ins_dupont4;
+}
+	
+    //Instrumento Swope - no spectrographs
+		
+	
+	
+}
+</script>
+
+                    
+<script>
+function comboInstMode(form) {
+
+    var selec = form.instrument.options;
+    var combo = form.mode.options;
+    combo.length = null;
+
+
+    //Modes PFS
+
+    if (selec[form.instrument.selectedIndex].text == "PFS")
+    {
+    var mode_pfs1 = new Option("PFS", "PFS");
+	
+    combo[0] = mode_pfs1;
+	}
+
+
+
+}
+</script>
+
+                    
+</head>
+
+
+
+<body>
+
+<!-- LCO ETC -->
+
+<center>
+<H1>Las Campanas Observatory Exposure Time Calculator</H1>
+<H2>Observatories of the Carnegie Institution for Science</H2>
+<hr>
+</br>
+<b>
+
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_sspec.html">Slit Spectroscopy</a>
+&emsp;
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_fspec.html">Fiber Spectroscopy</a>
+&emsp;
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_ima.html">Direct Imaging</a>
+&emsp;
+</center>
+
+
+
+<!-- Start FORM for input parameters -->
+
+<FORM action="http://alyth.lco.cl/cgi-bin/gblanc_cgi/lcoetc/lcoetc_sspec.py" method="GET">
+
+<br/>
+<fieldset>
+<legend>Target</legend>
+
+Spectral Template
+<select name="template">
+    <option value="O5V_Pickles.dat">O5V star</option>
+    <option value="B0V_Pickles.dat">B0V star</option>
+    <option value="A0V_Pickles.dat">A0V star</option>
+    <option value="F0V_Pickles.dat" selected>F0V star</option>
+    <option value="G0V_Pickles.dat">G0V star</option>
+    <option value="K0V_Pickles.dat">K0V star</option>
+    <option value="M0V_Pickles.dat">M0V star</option>
+    <option value="flat">Flat Continuum (AB)</option>
+</select>
+&emsp;
+
+      
+Target AB Magnitude
+  <input type=text name="abmag" size=5 maxlength=4 value="15.0">
+&emsp;
+
+
+Target AB Magnitude Filter
+<select name="tempfilter">
+  <option value="IMACS_sloan_u.dat">SDSS u'</option>
+  <option value="IMACS_sloan_g.dat">SDSS g'</option>
+  <option value="IMACS_sloan_r.dat" selected>SDSS r'</option>
+  <option value="IMACS_sloan_i.dat">SDSS i'</option>
+  <option value="IMACS_sloan_z.dat">SDSS z'</option>
+</select>
+
+<br/>
+<br/>
+
+Add Emission Line
+<select name="addline">
+  <option value="0" selected>No</option>
+  <option value="1">Yes</option>
+</select>
+&emsp;
+
+Line Wavelenght [A]
+  <input type=text name="linelam" size=6 maxlength=6 value="5000.0">
+&emsp;
+
+Line Flux [erg/(s cm^2)]
+  <input type=text name="lineflux" size=6 maxlength=6 value="1e-16">
+&emsp;
+
+Line FWHM [A]
+  <input type=text name="linefwhm" size=6 maxlength=6 value="5.0">
+&emsp;
+      
+
+</fieldset>
+
+</br>
+
+<fieldset>
+<legend>Instrumental Setup</legend>
+
+Telescope
+<select name="telescope" onChange="comboInstrument(this.form)">
+  <option value="" selected>Select</option>
+  <option value="MAGELLAN1">Baade 6.5m (M1)</option>
+  <option value="MAGELLAN2">Clay 6.5m (M2)</option>
+  <option value="C100">du Pont 2.5m (C100)</option>
+</select>
+&emsp;
+
+Instrument
+<select name="instrument" onChange="comboInstMode(this.form)">
+  <option value=""></option>
+</select>
+&emsp;
+
+Instrument Mode
+<select name="mode">
+  <option value=""></option>
+</select>
+&emsp;
+
+Slit Width [arcsec]
+  <input type=text name="dslit" size=6 maxlength=6 value="1.0">
+&emsp;
+
+<br/>
+<br/>
+
+Binning Spatial Direction
+<select name="binspat">
+  <option value="1" selected>1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+</select>
+&emsp;
+
+Binning Spectral Direction
+<select name="binspec">
+  <option value="1" selected>1</option>
+  <option value="2">2</option>
+  <option value="3">3</option>
+  <option value="4">4</option>
+  <option value="5">5</option>
+  <option value="6">6</option>
+  <option value="7">7</option>
+  <option value="8">8</option>
+</select>
+&emsp;
+
+</fieldset>
+
+<br/>
+
+<fieldset>
+
+<legend>Observing Conditions</legend>
+
+Days from New Moon
+<select name="nmoon">
+  <option value="0" selected>|0|</option>
+  <option value="1">|1|</option>
+  <option value="2">|2|</option>
+  <option value="3">|3|</option>
+  <option value="4">|4|</option>
+  <option value="5">|5|</option>
+  <option value="6">|6|</option>
+  <option value="7">|7|</option>
+  <option value="8">|8|</option>
+  <option value="9">|9|</option>
+  <option value="10">|10|</option>
+  <option value="11">|11|</option>
+  <option value="12">|12|</option>
+  <option value="13">|13|</option>
+  <option value="14">|14|</option>
+</select>
+&emsp;
+
+Airmass
+  <input type=text name="amass" size=6 maxlength=6 value="1.2">
+&emsp;
+
+Seeing FWHM [arcsec]
+  <input type=text name="dpsf" size=6 maxlength=6 value="0.6">
+&emsp;
+
+</fieldset>
+
+</br>
+
+<fieldset>
+
+<legend>Exposure and Extraction Parameters</legend>
+
+Single Frame Exposure Time [seconds]
+  <input type=text name="texp" size=6 maxlength=6 value="300">
+&emsp;
+
+Number of Exposures to Coadd
+<input type=text name="nexp" size=6 maxlength=6 value="3">
+&emsp;
+
+Extraction Aperture [arcsec]
+  <input type=text name="aper" size=6 maxlength=6 value="1.5">
+&emsp;
+
+</fieldset>
+
+
+</br>
+</br>
+
+<center>
+<input type="submit" value="CALCULATE" name="submitted">
+
+</br>
+</br>
+
+</b>
+
+It takes about 10 seconds... be patient.
+
+</center>
+
+</form>
+
+
+
+
+
+
+
+
+<hr>
+2016-10-18: This is a BETA Version written by Guillermo A. Blanc and Francesco Di Mille. It has not been fully validated. Use at your own risk.
+
+
+
+
+
+</body>
+
+</html>

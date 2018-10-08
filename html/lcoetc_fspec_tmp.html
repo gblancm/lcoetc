@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+    font-family: verdana;
+    font-size: 80%;
+}
+</style>
+
+
+<title>LCO ETC</title>
+
+<script>
+function comboInstrument(form) {
+
+    var selec = form.telescope.options;
+    var combo = form.instrument.options;
+    combo.length = null;
+
+    //Instrumentos Baade
+    if (selec[0].selected == true)
+    {
+    var seleccionar = new Option("Select","");
+    combo[0] = seleccionar;
+    }
+
+    if (selec[1].selected == true)
+    {
+    var ins_baade1 = new Option("FourStar");
+    var ins_baade2 = new Option("IMACS");
+    var ins_baade3 = new Option("MagE");
+    var ins_baade4 = new Option("FIRE");
+   
+
+    combo[0] = ins_baade1;
+    combo[1] = ins_baade2;
+    combo[2] = ins_baade3;
+    combo[3] = ins_baade4;
+	
+    }
+
+    //Instrumentos Clay
+
+    if (selec[2].selected == true)
+    {
+    var ins_clay1 = new Option("LDSS3");
+    var ins_clay2 = new Option("MIKE");
+    var ins_clay3 = new Option("PFS");
+    var ins_clay4 = new Option("MegaCam");
+    var ins_clay5 = new Option("MMIRS");
+    var ins_clay6 = new Option("M2FS");
+    var ins_clay7 = new Option("MagAO");
+    var ins_clay8 = new Option("PISCO");
+	
+    combo[0] = ins_clay1;
+    combo[1] = ins_clay2;
+    combo[2] = ins_clay3;
+	combo[3] = ins_clay4;
+	combo[4] = ins_clay5;
+	combo[5] = ins_clay6;
+	combo[6] = ins_clay7;
+	combo[7] = ins_clay8;
+	}
+	
+    //Instrumentos du Pont
+	
+    if (selec[3].selected == true)
+    {
+    var ins_dupont1 = new Option("CAPSCam");
+    var ins_dupont2 = new Option("WFCCD/WF4K");
+    var ins_dupont3 = new Option("Echelle");
+    var ins_dupont4 = new Option("ModSpec");
+    var ins_dupont5 = new Option("CCD/SITe2K");
+    var ins_dupont6 = new Option("CCD/WF4K");
+    var ins_dupont7 = new Option("WIRC");
+    var ins_dupont8 = new Option("B&C");
+    var ins_dupont9 = new Option("CAPSCam");
+    var ins_dupont10 = new Option("RetroCam");
+    var ins_dupont11 = new Option("APOGEE");
+	
+    combo[0] = ins_dupont1;
+    combo[1] = ins_dupont2;
+    combo[2] = ins_dupont3;
+	combo[3] = ins_dupont4;
+	combo[4] = ins_dupont5;
+	combo[5] = ins_dupont6;
+	combo[6] = ins_dupont7;
+	combo[7] = ins_dupont8;
+	combo[8] = ins_dupont9;
+	combo[9] = ins_dupont10;
+	combo[10] = ins_dupont11;
+}
+	
+    //Instrumento Swope
+	
+    if (selec[4].selected == true)
+    {
+    var ins_swope1 = new Option("CCD");
+  
+	
+    combo[0] = ins_swope1;
+   
+}
+	
+	
+	
+}
+</script>
+
+                    
+</head>
+
+
+
+<body>
+
+<!-- LCO ETC -->
+
+<center>
+<H1>Las Campanas Observatory Exposure Time Calculator</H1>
+<H2>Observatories of the Carnegie Institution for Science</H2>
+<hr>
+</br>
+<b>
+
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_sspec.html">Slit Spectroscopy</a>
+&emsp;
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_fspec_tmp.html">Fiber Spectroscopy</a>
+&emsp;
+<a href="http://www.lco.cl/telescopes-information/irenee-du-pont/instruments/website/direct-ccd-manuals/exposure-time-calculator/Direct%20CCD%20Exposure%20Time%20Calculator/source.html">Direct Imaging</a>
+&emsp;
+<a href="http://alyth.lco.cl/gblanc_www/lcoetc/lcoetc_external.html">Instrument Specific ETCs</a>
+&emsp;
+</center>
+
+Coming soon...
+
+
+
+</body>
+
+</html>

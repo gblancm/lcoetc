@@ -1,0 +1,23 @@
+# Configuration file for MAGELLAN1_IMACS_F2_150_11
+# ------------------------------------------
+# ATEL: Telescope Collecting Area [cm2]
+# LMIN: Minimum Wavelength [A]
+# LMAX: Maximum Wavelength [A]
+# DPIX: Pixel Scale [arcsec/pixel]
+# DDISP: Dispersion [A/pixel]
+# DLSF: Optics Line Spread Function FWHM [A] (i.e. for an infinitely narrow slit)
+# GAIN: Gain [e/ADU]
+# RDN: Read Noise [e]
+# DARK: Dark Current [e/s]
+# ------------------------------------------
+ATEL  306383.8	      
+LMIN  4600
+LMAX  9000
+DPIX  0.20
+DDISP 2.630
+DLSF  4.0
+GAIN  0.48
+RDN   3.44
+DARK  0.001
+# NOTES: gain and rdn for Slow readout
+# DLSF: made up (~2 pix)
