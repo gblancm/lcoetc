@@ -1,5 +1,8 @@
 # lcoetc
-== Las Campanas Observatory Exposure Time Calculator ==
+=== 
+Las Campanas Observatory Exposure Time Calculator
+===
+
 To install on alyth do:
 
 > source install_on_alyth.csh
@@ -13,6 +16,8 @@ cgi      -> /Volumes/Alyth/Library/WebServer/CGI-Executables/gblanc_cgi/lcoetc
 html     -> /Volumes/Alyth/Library/WebServer/Documents/gblanc_www/lcoetc
 
 
-== TO DO: ==
+=== 
+TO DO: 
+===
 
 - [ ] Add 400 l/mm grism mode for IMACS f2 
