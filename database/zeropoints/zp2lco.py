@@ -11,7 +11,7 @@ from scipy.interpolate import interp1d
 filein=sys.argv[1]
 fileout=sys.argv[2]
 
-data=ascii.read(filein)
+data=ascii.read(filein, header_start=2, data_start=3)
 
 order=data['ap_id'].data
 lam=data['lambda'].data
