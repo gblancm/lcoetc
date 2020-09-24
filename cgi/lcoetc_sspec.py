@@ -134,7 +134,8 @@ def mkolam(lam, dlsf, dslitlam, ofile, filfile, abmag):
     return f(lam)
 
 def mklinelam(lam, dlsf, dslitlam, linelam, lineflux, linefwhm):
-    sigma=linefwhm/2.355
+    instsigma=np.sqrt(dlsf**2+dslitlam**2)/2.355 # rough estimate of instrumental sigma
+    sigma=np.max([linefwhm/2.355, instsigma/2]) # set floor of line width to half instrumental to avoid sampling problems
     linelam1=lineflux/(np.sqrt(2)*sigma)*np.exp(-1*(lam-linelam)**2/(2*sigma**2))
     # convolve with LSF (Gaussian of FWHM=dlsf)
     ddisp0=np.median(lam[1:len(lam)-1]-lam[0:len(lam)-2])
@@ -370,7 +371,7 @@ if form.getvalue('addline') == "1":
     linelam=float(form.getvalue('linelam'))
     lineflux=float(form.getvalue('lineflux'))
     linefwhm=float(form.getvalue('linefwhm'))
-    tmplam=mklinelam(lam, dlsf, dslitlam, linelam, lineflux, linefwhm)
+    tmplam=mklinelam(lam, dlsf, dslitlam, linelam, lineflux, linefwhm)/ddisp
     olam=olam+tmplam
 
 logf.write(str(datetime.now() - startTime)+" - Done adding line to klam array\n")

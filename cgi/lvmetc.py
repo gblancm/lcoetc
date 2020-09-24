@@ -144,8 +144,9 @@ def mkolam(lam, dlsf, dfiblam, ofile, filfile, abmag):
     return f(lam)
 
 def mklinelam(lam, dlsf, dfiblam, linelam, lineflux, linefwhm):
-    sigma=linefwhm/2.355
-    linelam1=lineflux/(np.sqrt(2)*sigma)*np.exp(-1*(lam-linelam)**2/(2*sigma**2))
+    instsigma=np.sqrt(dlsf**2+dfiblam**2)/2.355 # rough estimate of instrumental sigma
+    sigma=np.max([linefwhm/2.355, instsigma/2]) # set floor of line width to half instrumental to avoid sampling problems
+    linelam1=lineflux/(np.sqrt(2*np.pi)*sigma)*np.exp(-1*(lam-linelam)**2/(2*sigma**2))
     # convolve with LSF (Gaussian of FWHM=dlsf)
     ddisp0=np.median(lam[1:len(lam)-1]-lam[0:len(lam)-2])
     gauss=conv.Gaussian1DKernel(stddev=dlsf/2.355/ddisp0, x_size=round_up_to_odd(10*dlsf/2.355/ddisp0))
@@ -153,8 +154,11 @@ def mklinelam(lam, dlsf, dfiblam, linelam, lineflux, linefwhm):
     # convolve with fiber profile (Gaussian with FWHM=dfiblam)
     gauss=conv.Gaussian1DKernel(stddev=dfiblam/2.355/ddisp0, x_size=round_up_to_odd(10*dfiblam/2.355/ddisp0))
     linelam3=conv.convolve(linelam2, gauss.array, boundary='extend')
+    # debugging GB
+#    mysel=(lam>6550)*(lam<6570)
+#    ascii.write([lam[mysel], linelam1[mysel], linelam2[mysel], linelam3[mysel]], tmpdir+'/junk2.dat', overwrite=True)
+#    ascii.write([np.array([linefwhm, sigma, linelam, lineflux, np.sum(linelam1)])], tmpdir+'/junk3.dat', overwrite=True)
     return linelam3
-
 
 def mkelam(lam, elamfile):
     # Returns efficiency curve from elam file (must be fractional transmission)
@@ -349,15 +353,15 @@ klam=mkklam(lam, dlsf, dfiblam, klamfile)
 logf.write(str(datetime.now() - startTime)+" - Done making klam array\n")
 
 # Sky spectrum
-slam=mkslam(lam, dlsf, dfiblam, sfile)*dspax**2
+slam=mkslam(lam, dlsf, dfiblam, sfile)*np.pi*(dspax/2)**2
 
 logf.write(str(datetime.now() - startTime)+" - Done making slam array\n")
 
 # Object Continuum Spectrum (scaled by spaxel area)
 if form.getvalue('template') != 'flat':
-    olam=mkolam(lam, dlsf, dfiblam, ofile, filfile, abmag)*dspax**2
+    olam=mkolam(lam, dlsf, dfiblam, ofile, filfile, abmag)*np.pi*(dspax/2)**2
 else:
-    olam=10.0**(-0.4*(abmag+48.6))*c/lam**2*dspax**2
+    olam=10.0**(-0.4*(abmag+48.6))*c/lam**2*np.pi*(dspax/2)**2
 
 logf.write(str(datetime.now() - startTime)+" - Done making flux arrays\n")
     
@@ -367,11 +371,14 @@ if form.getvalue('addline') == "1":
     linelam=float(form.getvalue('linelam'))
     lineflux=float(form.getvalue('lineflux'))
     linefwhm=float(form.getvalue('linefwhm'))
-    tmplam=mklinelam(lam, dlsf, dfiblam, linelam, lineflux, linefwhm)*dspax**2
+    tmplam=mklinelam(lam, dlsf, dfiblam, linelam, lineflux, linefwhm)*np.pi*(dspax/2)**2/ddisp
     olam=olam+tmplam
 
 logf.write(str(datetime.now() - startTime)+" - Done adding line to klam array\n")
 
+# debugging GB
+#mysel=(lam>6500)*(lam<6600)
+#ascii.write([lam[mysel], olam[mysel]], tmpdir+'/junk.dat', overwrite=True)
     
 # System Throughput
 elam=mkelam(lam, elamfile)
@@ -450,12 +457,22 @@ hdul.close()
 logf.write(str(datetime.now() - startTime)+" - Done writing FITS\n")
 
 
+# Calculate emission line S/N in 3 pixel window
+if form.getvalue('addline') == "1":
+    ind=ind=np.abs(lam - linelam).argmin()
+    snrline=np.sum(outaper[1][ind-1:ind+2])/np.sqrt(np.sum(outaper[2][ind-1:ind+2]**2))
+    snrlinecoadd=np.sum(outapercoadd[1][ind-1:ind+2])/np.sqrt(np.sum(outapercoadd[2][ind-1:ind+2]**2))
+ 
+
+
 # Make Plots
 
 plt.figure(1, figsize=(12,10))
 
 plt.subplot(221)
 #plt.plot(lam, outivar[0], 'b', label='S/N Optimal')
+if form.getvalue('addline') == "1":
+    plt.plot(lam, outaper[0], 'r', label='S/N Line (3 pix) ='+"{:.2f}".format(snrline))
 plt.plot(lam, outaper[0], 'r', label='S/N Aperture')
 plt.legend(loc=0, fontsize=10)
 plt.title('Single '+str(texp)+' sec. Exposure - '+str(aper)+' Pixel Extraction Aperture')
@@ -476,6 +493,8 @@ plt.xlabel('Wavelength')
 
 plt.subplot(222)
 #plt.plot(lam, outivarcoadd[0], 'b', label='S/N Optimal')
+if form.getvalue('addline') == "1":
+    plt.plot(lam, outaper[0], 'r', label='S/N Line (3 pix) ='+"{:.2f}".format(snrlinecoadd))
 plt.plot(lam, outapercoadd[0], 'r', label='S/N Aperture')
 plt.yscale('linear')
 plt.legend(loc=0, fontsize=10)
