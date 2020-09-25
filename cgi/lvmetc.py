@@ -6,7 +6,6 @@ import cgitb; cgitb.enable()
 
 # set HOME environment variable to a directory the httpd server can write to
 os.environ["HOME"] = '/home/gblancm/lcoetc'
-
 os.environ["XDG_CONFIG_HOME"] = '$HOME'
 os.environ["XDG_CACHE_HOME"] = '$HOME'
 
@@ -275,6 +274,7 @@ if os.path.isfile(tmpdir+"/lvmetc_out.fits"):
 if os.path.isfile(tmpdir+"/lvmetc_out.png"):
     os.remove(tmpdir+"/lvmetc_out.png")
 
+    
 c=2.99792458e18   # Speed of light in [A/s]
 
 # Check time and start log file
