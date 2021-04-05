@@ -1,4 +1,4 @@
-In order to generate the .dat files required by the ETC, follows this workflow:
+In order to generate the .dat files required by the ETC, follow this workflow:
 
 1. Run the FIT_CONTINUUM_TO_ZP.ipynb notebook  to fit a continuum to the Francesco's eff files (do it for each telescope/instrument setup). 
    This will remove absorption lines and spikes from output data. Note that smoothed zero points  will be saved with a .eff2 extension.
